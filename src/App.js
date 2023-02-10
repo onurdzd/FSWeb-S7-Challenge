@@ -1,10 +1,17 @@
 import React from "react";
+import { Route } from "react-router-dom";
+import Form from "./Components/Form";
+import HomePage from "./Components/HomePage";
 
 const App = () => {
   return (
     <>
-      <h1>Teknolojik Yemekler</h1>
-      <p>Burdaki kodu silip kendi headerınızı ekleyebilirsiniz</p>
+      <Route exact path={"/"}>
+        <HomePage></HomePage>
+      </Route>
+      <Route path={"/pizza"}>
+        <Form></Form>
+      </Route>
     </>
   );
 };
