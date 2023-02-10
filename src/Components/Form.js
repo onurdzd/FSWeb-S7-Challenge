@@ -10,13 +10,13 @@ const initialValue = {
 };
 
 const Form = () => {
-  const [data, setData] = useState(initialValue);
+  const [siparisIcerik, setSiparisIcerik] = useState(initialValue);
   const error = "İsim en az 2 karakter olmalıdır";
   const [siparis, setSiparis] = useState([]);
 
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
-    setData({ ...data, [name]: checked ? checked : value });
+    setSiparisIcerik({ ...siparisIcerik, [name]: checked ? checked : value });
   };
 
   const limitCheckBox = () => {
@@ -32,11 +32,17 @@ const Form = () => {
     });
   };
 
-  console.log(data);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSiparis([...siparis, siparisIcerik]);
+    setSiparisIcerik("");
+  };
+
+  console.log(siparis);
 
   return (
     <fieldset>
-      <form id="pizza-form">
+      <form id="pizza-form" onSubmit={handleSubmit}>
         <label>
           İsim
           <input
@@ -45,12 +51,17 @@ const Form = () => {
             placeholder="isim"
             onChange={handleChange}
           ></input>
-          {(data !== "") & (data.length < 2) ? <div>{error}</div> : null}
+          {(siparisIcerik !== "") & (siparisIcerik.length < 2) ? (
+            <div>{error}</div>
+          ) : null}
         </label>
         <div>
           <label>
             Pizza Boyutunu Seç
             <select id="size-dropdown" onChange={handleChange}>
+              <option value="" disabled selected hidden>
+                Seçiniz
+              </option>
               <option name="boyut" value="kucuk">
                 Kucuk
               </option>
