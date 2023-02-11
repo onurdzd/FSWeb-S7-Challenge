@@ -52,6 +52,14 @@ export const Container = styled.div`
     font-size: 1.3rem;
     cursor: pointer;
   }
+
+  h5 {
+    border-bottom: 1px solid black;
+  }
+
+  p {
+    border-bottom: 1px solid black;
+  }
 `;
 
 const Header = () => {
