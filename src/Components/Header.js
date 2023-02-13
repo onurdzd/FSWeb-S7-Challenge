@@ -66,9 +66,9 @@ const Header = () => {
   return (
     <BackgroundImg>
       <Container>
-        <h3>Site Başlığı</h3>
+        <h3>Pizza Dukkanı</h3>
         <h1>Teknolojik Yemekler</h1>
-        <p>Burdaki kodu silip kendi headerınızı ekleyebilirsiniz</p>
+        <p>Hızlı,kolay ve güvenle sipariş verebilirsiniz</p>
       </Container>
     </BackgroundImg>
   );

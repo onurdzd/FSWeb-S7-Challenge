@@ -5,7 +5,7 @@ import Header, { Container } from "./Header";
 import img from "../Img/home-selection.jpg";
 
 const Main = styled.div`
-  height: 60vh;
+  height: 65vh;
   display: flex;
   justify-content: center;
   align-items: center;

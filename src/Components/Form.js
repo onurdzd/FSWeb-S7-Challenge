@@ -252,7 +252,7 @@ const Form = () => {
             {siparis.length > 0 && (
               <div>
                 <h3>Tebrikler! Pizza'nız yola çıktı</h3>
-                <h5>Sipariş özeti: </h5>
+                <h5>Sipariş özeti </h5>
                 {siparis.map((item, index) => (
                   <p key={index}>
                     <div>Sipariş veren: {item.isim}</div>
