@@ -1,22 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route } from "react-router-dom";
 import Footer from "./Components/Footer";
 import Form from "./Components/Form";
 import HomePage from "./Components/HomePage";
 import "./App.css";
 import Restoranlar from "./Components/Restoranlar";
+import Siparis from "./Components/Siparis";
+import Header from "./Components/Header";
 
 const App = () => {
+  const [siparis, setSiparis] = useState([]);
+  const [malzemeIsim, setMalzemeIsim] = useState([]);
   return (
     <>
       <Route exact path={"/"}>
         <HomePage></HomePage>
         <Restoranlar></Restoranlar>
+        <Footer></Footer>
       </Route>
       <Route path={"/pizza"}>
-        <Form></Form>
+        <Header></Header>
+        <Form
+          setSiparis={setSiparis}
+          siparis={siparis}
+          malzemeIsim={malzemeIsim}
+          setMalzemeIsim={setMalzemeIsim}
+        ></Form>
+        <Footer></Footer>
       </Route>
-      <Footer></Footer>
+      <Route path={"/siparis"}>
+        <Header></Header>
+        <Siparis
+          siparis={siparis}
+          malzemeIsim={malzemeIsim}
+          setMalzemeIsim={setMalzemeIsim}
+        ></Siparis>
+        <Footer></Footer>
+      </Route>
     </>
   );
 };

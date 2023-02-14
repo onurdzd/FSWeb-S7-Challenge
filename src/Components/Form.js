@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Header, { Container } from "./Header";
+import { Container } from "./Header";
 import styled, { css } from "styled-components";
 import img2 from "../Img/siparis-orta.jpg";
+import * as Yup from "yup";
+import { useHistory } from "react-router-dom";
 
 const initialValue = {
   isim: "",
   boyut: "",
-  özel: "",
+  ozel: "",
 };
 
 const CheckBoxDiv = styled.div`
@@ -52,36 +54,70 @@ const BackgroundImg2 = styled.div`
 `;
 
 const ButtonStyled = styled.button`
-  background-color: #240f0fd9;
+  background-color: #318f36;
   color: aliceblue;
   width: 30%;
   margin: 0 auto;
+
+  &:disabled {
+    background-color: grey;
+  }
 `;
 
 const FormDiv = styled.div`
   width: 50%;
-  margin: 1rem auto;
-  padding: 1rem;
+  margin: 0.5rem auto;
+  padding: 0.5rem;
   border-bottom: 2px solid black;
 `;
 
-const Form = () => {
+const Form = ({ siparis, setSiparis, setMalzemeIsim, malzemeIsim }) => {
   const [siparisIcerik, setSiparisIcerik] = useState(initialValue);
-  const error = "İsim en az 2 karakter olmalıdır";
-  const [siparis, setSiparis] = useState([]);
-  const [buttonToggle, setButtonToggle] = useState();
-  const [malzemeIsım, setMalzemeIsım] = useState();
+  const [formError, setFormError] = useState(initialValue);
+
+  const [buttonToggle, setButtonToggle] = useState(true);
+
+  let history = useHistory();
+
+  let userSchema = Yup.object({
+    isim: Yup.string()
+      .required("Bu alan gereklidir")
+      .min(2, "En az 2 karakter olmalı"),
+    boyut: Yup.string().required("Boyut seçilmeli"),
+    ozel: Yup.string()
+      .required("İstek yazılmalı")
+      .min(3, "En az 3 karakter olmalı"),
+  });
+
+  const errorCheck = (name, value) => {
+    Yup.reach(userSchema, name)
+      .validate(value)
+      .then(() => {
+        setFormError({
+          ...formError,
+          [name]: "",
+        });
+      })
+      .catch((error) => {
+        setFormError({
+          ...formError,
+          [name]: error.errors[0],
+        });
+      });
+  };
 
   const handleChange = (e) => {
-    const { name, value, checked } = e.target;
-    setSiparisIcerik({ ...siparisIcerik, [name]: checked ? checked : value });
-    checked && setMalzemeIsım({ [checked]: name });
+    const { name, value, type, checked } = e.target;
+    setSiparisIcerik({
+      ...siparisIcerik,
+      [name]: type === "checkbox" ? checked : value,
+    });
+    checked && setMalzemeIsim([...malzemeIsim, name]);
+    type !== "checkbox" && errorCheck(name, value);
   };
 
   useEffect(() => {
-    !siparisIcerik.isim || !siparisIcerik.boyut || !siparisIcerik.özel
-      ? setButtonToggle(false)
-      : setButtonToggle(true);
+    userSchema.isValid(siparisIcerik).then((valid) => setButtonToggle(!valid));
   }, [siparisIcerik]);
 
   const limitCheckBox = () => {
@@ -96,7 +132,7 @@ const Form = () => {
       }
     });
   };
-
+  console.log(malzemeIsim);
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
@@ -106,6 +142,7 @@ const Form = () => {
       .then((response) => {
         console.log(response.data.siparisIcerik);
         setSiparis([...siparis, response.data.siparisIcerik]);
+        history.push("/siparis");
         setSiparisIcerik("");
       })
       .catch((error) => {
@@ -115,7 +152,6 @@ const Form = () => {
 
   return (
     <Container>
-      <Header></Header>
       Kendi Pizzanızı Yapın
       <BackgroundImg2>
         <fieldset>
@@ -131,11 +167,7 @@ const Form = () => {
                   data-cy="name-input"
                   onChange={handleChange}
                 ></input>
-                {siparisIcerik.isim &&
-                (siparisIcerik.isim !== "") &
-                  (siparisIcerik.isim.length < 2) ? (
-                  <CheckBoxDiv error>{error}</CheckBoxDiv>
-                ) : null}
+                {formError.isim && <div>{formError.isim}</div>}
               </label>
             </FormDiv>
             <FormDiv>
@@ -172,7 +204,7 @@ const Form = () => {
                   <label>
                     Mısır
                     <input
-                      type={"checkbox"}
+                      type="checkbox"
                       name="Mısır"
                       value="Mısır"
                       className="checkbox"
@@ -186,7 +218,7 @@ const Form = () => {
                   <label>
                     Sucuk
                     <input
-                      type={"checkbox"}
+                      type="checkbox"
                       name="Sucuk"
                       value="Sucuk"
                       className="checkbox"
@@ -200,7 +232,7 @@ const Form = () => {
                   <label>
                     Mantar
                     <input
-                      type={"checkbox"}
+                      type="checkbox"
                       name="Mantar"
                       value="Mantar"
                       className="checkbox"
@@ -214,7 +246,7 @@ const Form = () => {
                   <label>
                     Sosis
                     <input
-                      type={"checkbox"}
+                      type="checkbox"
                       name="Sosis"
                       value="Sosis"
                       className="checkbox"
@@ -232,37 +264,23 @@ const Form = () => {
                 <input
                   type="text"
                   id="special-text"
-                  name="özel"
+                  name="ozel"
                   onChange={handleChange}
                   placeholder="Talebinizi iletebilirsiniz"
-                  data-cy="özel"
+                  data-cy="ozel"
                 ></input>
+                {formError.ozel && <div>{formError.ozel}</div>}
               </label>
             </FormDiv>
 
             <ButtonStyled
               id="order-button"
-              type="submit"
               data-cy="siparis-button"
-              disabled={!buttonToggle}
+              disabled={buttonToggle}
+              type="submit"
             >
               Siparişlere Ekle
             </ButtonStyled>
-
-            {siparis.length > 0 && (
-              <div>
-                <h3>Tebrikler! Pizza'nız yola çıktı</h3>
-                <h5>Sipariş özeti </h5>
-                {siparis.map((item, index) => (
-                  <p key={index}>
-                    <div>Sipariş veren: {item.isim}</div>
-                    <div>Pizza Boyutu: {item.boyut}</div>
-                    <div>Pizza Malzemeleri: {malzemeIsım.true}</div>
-                    <div>Özel İstekler: {item.özel}</div>
-                  </p>
-                ))}
-              </div>
-            )}
           </form>
         </fieldset>
       </BackgroundImg2>

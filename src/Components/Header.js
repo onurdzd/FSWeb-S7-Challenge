@@ -43,6 +43,9 @@ export const Container = styled.div`
     background-color: #d4b4b4b3;
     border-radius: 1rem;
     padding: 0.5rem;
+    width: 70%;
+    margin: 0 auto;
+    margin-bottom: 0.5rem;
   }
 
   button {

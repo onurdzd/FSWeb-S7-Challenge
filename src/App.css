@@ -12,5 +12,8 @@ input[type=checkbox] {
     font-size: 1.2rem;
     padding: 0.5rem;
     border-radius: 1rem;
+}
 
+.siparisOzet {
+    min-height: 50vh;
 }

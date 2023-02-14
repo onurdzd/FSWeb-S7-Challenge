@@ -67,8 +67,8 @@ const Restoranlar = () => {
           </div>
           <h3 className="restoranDivs">{item.marka}</h3>
           <div className="urunDiv restoranDivs">
-            {item.urun.map((elem) => (
-              <div>{elem}</div>
+            {item.urun.map((elem, index) => (
+              <div key={index}>{elem}</div>
             ))}
           </div>
           <div className="sureucret restoranDivs">
