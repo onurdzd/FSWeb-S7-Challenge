@@ -61,7 +61,7 @@ const Restoranlar = () => {
   return (
     <div className="container flexbox">
       {restoranListesi.map((item, index) => (
-        <div className="restoranCard restoranDivs" key={index}>
+        <div key={index} className="restoranCard restoranDivs">
           <div>
             <RestoranImg src={item.img} alt="restoran logos"></RestoranImg>
           </div>
