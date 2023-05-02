@@ -21,7 +21,9 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "plugin:react/recommended"
+  ]
   },
   "browserslist": {
     "production": [
@@ -36,6 +38,7 @@
     ]
   },
   "devDependencies": {
-    "cypress": "^12.5.1"
+    "cypress": "^12.5.1",
+    "eslint-plugin-react": "^7.32.2"
   }
 }
