@@ -16,14 +16,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": [
-      "plugin:react/recommended"
-  ]
+    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -38,7 +36,6 @@
     ]
   },
   "devDependencies": {
-    "cypress": "^12.5.1",
-    "eslint-plugin-react": "^7.32.2"
+    "cypress": "^12.5.1"
   }
 }
