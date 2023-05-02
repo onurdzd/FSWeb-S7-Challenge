@@ -132,7 +132,7 @@ const Form = ({ siparis, setSiparis, setMalzemeIsim, malzemeIsim }) => {
       }
     });
   };
-  console.log(malzemeIsim);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios

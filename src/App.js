@@ -31,6 +31,7 @@ const App = () => {
       <Route path={"/siparis"}>
         <Header></Header>
         <Siparis
+          setSiparis={setSiparis}
           siparis={siparis}
           malzemeIsim={malzemeIsim}
           setMalzemeIsim={setMalzemeIsim}

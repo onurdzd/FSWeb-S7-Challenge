@@ -23,7 +23,7 @@ const SiparisOzetDiv = styled.div`
   display: inline-block;
 `;
 
-const Siparis = ({ siparis, malzemeIsim, setMalzemeIsim }) => {
+const Siparis = ({ siparis, malzemeIsim, setMalzemeIsim, setSiparis }) => {
   let history = useHistory();
 
   return (
@@ -51,7 +51,8 @@ const Siparis = ({ siparis, malzemeIsim, setMalzemeIsim }) => {
       <ButtonDiv
         onClick={() => {
           history.push("/pizza");
-          setMalzemeIsim("");
+          setMalzemeIsim([]);
+          setSiparis([]);
         }}
       >
         Tekrar Sipariş Ver
